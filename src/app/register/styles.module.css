@@ -89,7 +89,7 @@
 }
 
 .form label {
-  margin-top: 40px;
+  margin-top: 10px;
   font-size: 16px;
   font-weight: 500;
   width: 100%;
@@ -101,7 +101,7 @@
   background-color: rgba(255, 255, 255, 0.07);
   border-radius: 3px;
   padding: 0 10px;
-  margin-top: 8px;
+  margin-top: 4px;
   font-size: 14px;
   font-weight: 300;
 }

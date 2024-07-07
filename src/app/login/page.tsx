@@ -1,6 +1,6 @@
 'use client';
 
-import {useState} from 'react';
+import { useState } from 'react';
 import styles from './styles.module.css';
 
 export default function Login() {
@@ -25,7 +25,7 @@ export default function Login() {
             id="email"
             autoComplete="email"
             value={email}
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
@@ -37,11 +37,15 @@ export default function Login() {
             id="password"
             autoComplete="current-password"
             value={password}
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
 
           <button type="submit">Login</button>
+          <br />
+          <p>
+            Dont have an account? <a href="/register">Register</a>
+          </p>
         </form>
       </div>
     </div>
