@@ -172,3 +172,53 @@ h6 {
 #__next {
   isolation: isolate;
 }
+
+.form {
+  flex: auto;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form * {
+  border: none;
+}
+
+.form label {
+  margin-top: 16px;
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+}
+
+.form input {
+  height: 50px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  padding: 0 10px;
+  margin-top: 4px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.form ::placeholder {
+  color: var(--text-secondary);
+}
+
+.form button {
+  margin-top: 32px;
+  width: 100%;
+  background-color: var(--text-primary);
+  color: var(--text-invert);
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.error {
+  color: var(--text-primary-red);
+}

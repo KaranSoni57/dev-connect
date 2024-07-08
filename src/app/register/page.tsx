@@ -1,83 +1,113 @@
 'use client';
 
-import { useState } from 'react';
-import styles from './styles.module.css';
+import {useState} from 'react';
+import {useRouter} from 'next/navigation';
+import {API_URLS} from '../apiConfig';
+import Link from 'next/link';
+import GlassContainer from '../components/GlassContainer/GlassContainer';
 
-interface DATA {
-  fullname: string;
+interface UserData {
+  fullName: string;
   username: string;
   email: string;
   password: string;
 }
 
-export default function Login() {
-  const [data, setData] = useState({} as DATA);
+export default function Register() {
+  const [userData, setUserData] = useState<UserData>({
+    fullName: '',
+    username: '',
+    email: '',
+    password: '',
+  });
+  const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(API_URLS.REGISTER, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message);
+      }
+
+      router.push('/login');
+    } catch (error: any) {
+      setError(error.message);
+      console.error('Registration error:', error.message);
+    }
+  };
 
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.container}>
-        <div className={styles.background}>
-          <div className={styles.shape}></div>
-          <div className={styles.shape}></div>
-        </div>
-        <form className={styles.form}>
-          <h1>Register</h1>
+    <GlassContainer maxWidth="400px">
+      <form className="form" onSubmit={handleSubmit}>
+        <h1>Register</h1>
 
-          <label htmlFor="fullname">Full Name</label>
-          <input
-            type="text"
-            placeholder="Full Name"
-            name="fullname"
-            id="fullname"
-            autoComplete="fullname"
-            value={data.fullname}
-            onChange={(e) => setData({ ...data, fullname: e.target.value })}
-            required
-          />
+        <p className="error">{error}</p>
 
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            placeholder="Username"
-            name="username"
-            id="username"
-            autoComplete="username"
-            value={data.username}
-            onChange={(e) => setData({ ...data, username: e.target.value })}
-            required
-          />
+        <label htmlFor="fullName">Full Name</label>
+        <input
+          type="text"
+          placeholder="Full Name"
+          name="fullName"
+          id="fullName"
+          autoComplete="name"
+          value={userData.fullName}
+          onChange={e => setUserData({...userData, fullName: e.target.value})}
+          required
+        />
 
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            id="email"
-            autoComplete="email"
-            value={data.email}
-            onChange={(e) => setData({ ...data, email: e.target.value })}
-            required
-          />
+        <label htmlFor="username">Username</label>
+        <input
+          type="text"
+          placeholder="Username"
+          name="username"
+          id="username"
+          autoComplete="username"
+          value={userData.username}
+          onChange={e => setUserData({...userData, username: e.target.value})}
+          required
+        />
 
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            id="password"
-            autoComplete="current-password"
-            value={data.password}
-            onChange={(e) => setData({ ...data, password: e.target.value })}
-            required
-          />
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          placeholder="Email"
+          name="email"
+          id="email"
+          autoComplete="email"
+          value={userData.email}
+          onChange={e => setUserData({...userData, email: e.target.value})}
+          required
+        />
 
-          <button type="submit">Register</button>
-          <br />
-          <p>
-            Already have an account? <a href="/login">Login</a>
-          </p>
-        </form>
-      </div>
-    </div>
+        <label htmlFor="password">Password</label>
+        <input
+          type="password"
+          placeholder="Password"
+          name="password"
+          id="password"
+          autoComplete="current-password"
+          value={userData.password}
+          onChange={e => setUserData({...userData, password: e.target.value})}
+          required
+        />
+
+        <button type="submit">Register</button>
+        <br />
+        <p>
+          Already have an account? <Link href={'/login'}>Login</Link>
+        </p>
+      </form>
+    </GlassContainer>
   );
 }
